@@ -11,7 +11,7 @@ module.exports = {
         try{ 
         const password = await bcrypt.hash(req.body.password,10);
         const user = await User.create({...req.body, password});
-        const token = jwt.sign({"id":user._id}, "Secreto", { expiresIn: 60 * 60 });
+        
         res.status(200).json(token);
         //res.status(200).json(user);
         } catch (error){
@@ -20,20 +20,20 @@ module.exports = {
     }, 
     async signin(req,res){
         try{
-
+            
             const user = await User.findOne({email: req.body.email} );
             if (!user){
                 throw Error("Wrong user/password");         
             } 
-            console.log(user);
+
             const password = user.password;
-            console.log(password);
             const result = await bcrypt.compare(req.body.password, password);
             if (result){
-                res.status(200).json("lo que sea");
+                const token = await jwt.sign({"id":user._id}, "Secreto", { expiresIn: 60 * 60});
+  
+                res.status(200).json(token);
             } else {
-
-                res.status(200).json("Wrong user/password");
+                res.status(401).json("Wrong user/password");
             } 
             
         } 
