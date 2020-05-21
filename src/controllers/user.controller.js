@@ -18,6 +18,32 @@ module.exports = {
             res.status(401).json(error);
         }  
     }, 
+    async signin(req,res){
+        try{
+
+            const user = await User.findOne({email: req.body.email} );
+            if (!user){
+                throw Error("Wrong user/password");         
+            } 
+            console.log(user);
+            const password = user.password;
+            console.log(password);
+            const result = await bcrypt.compare(req.body.password, password);
+            if (result){
+                res.status(200).json("lo que sea");
+            } else {
+
+                res.status(200).json("Wrong user/password");
+            } 
+            
+        } 
+        catch (error){
+            res.status(401).json({ message: error.message });
+        } 
+        
+
+
+    },
     async update (req, res){
         const options ={
             new: true,

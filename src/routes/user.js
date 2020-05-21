@@ -7,5 +7,6 @@ router.route('/:userId').put(userController.update);
 router.route('/:userId').get(userController.show);
 router.route('/:userId').delete(userController.destroy);
 
+router.route('/signin').post(userController.signin);
 
 module.exports = router;
