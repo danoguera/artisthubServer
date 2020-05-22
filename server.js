@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const cors= require("cors");
 const initDatabase = require('./src/db.js');
@@ -14,6 +15,6 @@ app.use("/users",userRouter);
 app.use("/posts", postRouter);
 
 
+const port = process.env.PORT || 3000;
 
-
-app.listen(3000, () => console.log("Listening on port 3000"));
+app.listen(port, () => console.log(`Listening on port ${port}`));

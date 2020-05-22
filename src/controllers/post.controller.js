@@ -31,8 +31,6 @@ module.exports = {
     async showAll (req, res){
 
         const subcategoryName = req.params.subcategoryName;
-        console.log("La subcategoria es" + subcategoryName);
-        
         const posts = await Post.find({subcategory: subcategoryName} );
         res.status(200).json(posts);
     },
