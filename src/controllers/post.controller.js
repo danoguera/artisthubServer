@@ -8,8 +8,8 @@ module.exports = {
     },
     async create(req, res){
         try{ 
-        const post = await Post.create({...req.body});
-        res.status(200).json(post);
+            const post = await Post.create({...req.body, owner:req.user.id});
+            res.status(200).json(post);
         } catch (error){
             res.status(401).json(error);
         }  
@@ -24,9 +24,14 @@ module.exports = {
     },
     async show (req, res){
 
-        const postId = req.params.postId;
-        const post = await Post.findById(postId, req.body);
-        res.status(200).json(post);
+        try {
+            const postId = req.params.postId;
+            const post = await Post.findById(postId, req.body);
+            res.status(200).json(post);
+            
+        } catch (error) {
+            res.status(401).json({ message: error.message });
+        }
     },
     async showAll (req, res){
 
