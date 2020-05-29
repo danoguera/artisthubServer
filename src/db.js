@@ -8,11 +8,11 @@ function initDatabase(){
     } 
 
 
-    mongoose.connect("mongodb://127.0.0.1:27017/artisthub", options);
+    mongoose.connect(process.env.MONGO_URL, options);
 
     const {connection} = mongoose;
 
-    connection.once("open", () => console.log("DB connection established..."));
+    connection.once("open", () => console.log(`DB connection established...${process.env.MONGO_URL} `));
     connection.on("error", (err) => console.log("Error: ",err));
 
     return connection;

@@ -12,7 +12,10 @@ const postSchema = new Schema({
     category: String, 
     subcategory: String,
     media: String,
-    post_image: String,
+    post_image: {
+        type: String,
+        required:[true, "An image for the post is required"] 
+    },
     owner:{
         type: String,
         required: [true, "An owner is required"] 

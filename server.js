@@ -4,6 +4,8 @@ const cors= require("cors");
 const initDatabase = require('./src/db.js');
 const userRouter = require('./src/routes/user');
 const postRouter = require('./src/routes/post');
+const providerRouter = require('./src/routes/provider');
+
 
 initDatabase();
 
@@ -13,6 +15,7 @@ app.use(express.json());
 
 app.use("/users",userRouter);
 app.use("/posts", postRouter);
+app.use("/provider", providerRouter);
 
 
 const port = process.env.PORT || 3000;

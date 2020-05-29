@@ -10,12 +10,12 @@ module.exports = {
     async create(req, res){
         try{ 
         const password = await bcrypt.hash(req.body.password,10);
-        const user = await User.create({...req.body, password});
+        const email = req.body.email.toLowerCase();
+        const user = await User.create({...req.body, email, password});
 
         const token = await jwt.sign({"id":user._id},  process.env.SECRET, { expiresIn: 60 * 60});
   
-        res.status(200).json(token);
-        
+       
         res.status(200).json(token);
         } catch (error){
             res.status(401).json(error);
@@ -23,8 +23,8 @@ module.exports = {
     }, 
     async signin(req,res){
         try{
-            
-            const user = await User.findOne({email: req.body.email} );
+
+            const user = await User.findOne({email: req.body.email.toLowerCase()} );
             if (!user){
                 throw Error("Wrong user/password");         
             } 
@@ -33,19 +33,14 @@ module.exports = {
             const result = await bcrypt.compare(req.body.password, password);
             if (result){
                 const token = await jwt.sign({"id":user._id},  process.env.SECRET, { expiresIn: 60 * 60});
-  
                 res.status(200).json(token);
             } else {
                 res.status(401).json("Wrong user/password");
             } 
-            
-        } 
+         } 
         catch (error){
-            res.status(401).json({ message: error.message });
+             res.status(401).json({ message: error.message });
         } 
-        
-
-
     },
     async update (req, res){
         const options ={
@@ -66,7 +61,4 @@ module.exports = {
         const user = await User.findByIdAndDelete(userId);
         res.status(200).json(user);
     },
-
-
-
 } 
