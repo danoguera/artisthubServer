@@ -17,11 +17,18 @@ module.exports = {
         }  
     }, 
     async update (req, res){
+        let modified, post_image;
+        if (req.file.filename) {
+            post_image= process.env.PHOTO_SERVER + req.file.filename;
+            modified = {...req.body, post_image}
+        }else {
+            modified = {...req.body};
+        }
         const options ={
             new: true,
         };
         const postId = req.params.postId;
-        const post = await Post.findByIdAndUpdate(postId, req.body, options);
+        const post = await Post.findByIdAndUpdate(postId, modified, options);
         res.status(200).json(post);
     },
     async show (req, res){

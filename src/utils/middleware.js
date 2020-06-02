@@ -6,7 +6,7 @@ const { v4: uuidv4} = require ('uuid');
 
     const storage = multer.diskStorage({
     destination: function(req, file, callback) {
-        callback(null, '/home/jhhernan/React/artisthub_server/' + 'public/uploads/images/');
+        callback(null, '/home/jhhernan/node/artisthubserver/' + 'public/uploads/images/');
     },
     filename: function(req, file, callback) {
         callback(null,uuidv4()+".jpg")}
@@ -24,21 +24,16 @@ module.exports = {
             await upload(req, res, function (err) {
                 if (err instanceof multer.MulterError) {
                   // A Multer error occurred when uploading.
-                  console.log("Error de multer");
                 } else if (err) {
                   // An unknown error occurred when uploading.
-                  console.log("Error de otra cosa");
                 }
-                console.log("Pase por aqui" + req.file.filename);
+                
                 next();   //Por que toca poner esto aqui??
             }); 
 
-
         } catch(error){
-            console.log(error);
+
         }  
-
-
     },
 
     async auth(req, res, next) {
