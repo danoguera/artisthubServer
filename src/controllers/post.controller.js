@@ -3,7 +3,8 @@ const Post = require('../models/post.model');
 
 module.exports = {
     async list(req, res){
-        const posts= await Post.find();
+        const owner= req.user.id;
+        const posts= await Post.find({ owner: owner});
         res.status(200).json(posts);
     },
     async create(req, res){
