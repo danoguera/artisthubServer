@@ -8,8 +8,9 @@ module.exports = {
         res.status(200).json(posts);
     },
     async create(req, res){
-        try{ 
-            const post = await Post.create({...req.body, owner:req.user.id});
+        try{    //se añade el post image usando midleware savePhoto
+            const post_image= process.env.PHOTO_SERVER + req.file.filename;
+            const post = await Post.create({...req.body, owner:req.user.id, post_image});
             res.status(200).json(post);
         } catch (error){
             res.status(401).json(error);

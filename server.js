@@ -6,12 +6,13 @@ const userRouter = require('./src/routes/user');
 const postRouter = require('./src/routes/post');
 const providerRouter = require('./src/routes/provider');
 
-
 initDatabase();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use(express.static('public'));
 
 app.use("/users",userRouter);
 app.use("/posts", postRouter);
