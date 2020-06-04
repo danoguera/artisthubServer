@@ -1,9 +1,40 @@
 const jwt = require('jsonwebtoken');
 const Post = require('../models/post.model');
 
+const multer = require('multer');
+const { v4: uuidv4} = require ('uuid');
+
+    const storage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, '/home/jhhernan/node/artisthubserver/' + 'public/uploads/images/');
+    },
+    filename: function(req, file, callback) {
+        callback(null,uuidv4()+".jpg")}
+    });
+
+    const upload = multer({ storage: storage }).single("photo");
 
 
 module.exports = {
+
+    async savePhoto(req, res, next) {
+        try{
+            //await upload.single('photo'); 
+            //await upload(req,res,next);
+            await upload(req, res, function (err) {
+                if (err instanceof multer.MulterError) {
+                  // A Multer error occurred when uploading.
+                } else if (err) {
+                  // An unknown error occurred when uploading.
+                }
+                
+                next();   //Por que toca poner esto aqui??
+            }); 
+
+        } catch(error){
+
+        }  
+    },
 
     async auth(req, res, next) {
         try {
