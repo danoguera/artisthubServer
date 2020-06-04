@@ -17,19 +17,24 @@ module.exports = {
         }  
     }, 
     async update (req, res){
-        let modified, post_image;
-        if (req.file.filename) {
-            post_image= process.env.PHOTO_SERVER + req.file.filename;
-            modified = {...req.body, post_image}
-        }else {
-            modified = {...req.body};
+        try {
+            let modified, post_image;
+            if (req.file) {
+                post_image= process.env.PHOTO_SERVER + req.file.filename;
+                modified = {...req.body, post_image}
+            }else {
+                modified = {...req.body};
+            }
+            const options ={
+                new: true,
+            };
+            const postId = req.params.postId;
+            const post = await Post.findByIdAndUpdate(postId, modified, options);
+            res.status(200).json(post);
+        } catch (error) {
+            res.status(401).json({ message: error.message });
         }
-        const options ={
-            new: true,
-        };
-        const postId = req.params.postId;
-        const post = await Post.findByIdAndUpdate(postId, modified, options);
-        res.status(200).json(post);
+
     },
     async show (req, res){
 
@@ -46,6 +51,11 @@ module.exports = {
 
         const subcategoryName = req.params.subcategoryName;
         const posts = await Post.find({subcategory: subcategoryName} );
+        res.status(200).json(posts);
+    },
+    async showAllCategory (req, res){
+        const categoryName = req.params.categoryName;
+        const posts = await Post.find({category: categoryName} );
         res.status(200).json(posts);
     },
     async destroy(req, res){

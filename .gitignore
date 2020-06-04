@@ -1,6 +1,8 @@
 # dependencies
 /node_modules
 
+#Imagenes de posts (temporal)
+/public/uploads/images
 
 .env
 
