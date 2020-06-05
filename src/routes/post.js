@@ -12,7 +12,7 @@ router.route('/:postId').delete(verify, postController.destroy);
 
 
 router.route('/subcategory/:subcategoryName').get(auth, postController.showAll);
-
+router.route('/category/:categoryName').get(auth, postController.showAllCategory);
 
 
 
