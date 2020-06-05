@@ -6,7 +6,7 @@ const { v4: uuidv4} = require ('uuid');
 
     const storage = multer.diskStorage({
     destination: function(req, file, callback) {
-        callback(null, '/home/jhhernan/node/artisthubserver/' + 'public/uploads/images/');
+        callback(null, process.env.RUTA_SERVER+ 'public/uploads/images/');
     },
     filename: function(req, file, callback) {
         callback(null,uuidv4()+".jpg")}
