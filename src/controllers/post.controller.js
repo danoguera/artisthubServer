@@ -63,6 +63,12 @@ module.exports = {
         const post = await Post.findByIdAndDelete(postId);
         res.status(200).json(post);
     },
+    async filterByCategory(req, res){
+        const categoryName = req.params.categoryName;
+        const subcategoryName = req.params.subcategoryName;
+        const posts = await Post.find({subcategory: subcategoryName, category: categoryName} );
+        res.status(200).json(posts);
+    },
 
 
 
