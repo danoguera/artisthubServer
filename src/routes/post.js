@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const postController = require('../controllers/post.controller');
 const {auth, verify, savePhoto} = require('../utils/middleware');
-
+const { formData } = require('../utils/cloud');
 
 router.route('/').get(auth, postController.list);
-router.route('/').post(auth, savePhoto, postController.create); //Se añade middleware que manejo de archivos
-router.route('/:postId').put(verify, savePhoto, postController.update);  //Actualizar un post
+router.route('/').post(auth, formData, postController.create); //Se añade middleware que manejo de archivos
+router.route('/:postId').put(verify, formData, postController.update);  //Actualizar un post
 router.route('/:postId').get(postController.show);
 router.route('/:postId').delete(verify, postController.destroy);
 
