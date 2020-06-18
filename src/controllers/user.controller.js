@@ -23,7 +23,6 @@ module.exports = {
     }, 
     async signin(req,res){
         try{
-
             const user = await User.findOne({email: req.body.email.toLowerCase()} );
             if (!user){
                 throw Error("Wrong user/password");         

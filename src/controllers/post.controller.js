@@ -9,7 +9,8 @@ module.exports = {
     },
     async create(req, res){
         try{    //se añade el post image usando midleware savePhoto
-            const post_image= process.env.PHOTO_SERVER + req.file.filename;
+            //const post_image= process.env.PHOTO_SERVER + req.file.filename;
+            const post_image = req.body["photo"].url;
             const post = await Post.create({...req.body, owner:req.user.id, post_image});
             res.status(200).json(post);
         } catch (error){
@@ -19,8 +20,8 @@ module.exports = {
     async update (req, res){
         try {
             let modified, post_image;
-            if (req.file) {
-                post_image= process.env.PHOTO_SERVER + req.file.filename;
+            if (req.body["photo"]) {
+                post_image = req.body["photo"].url;
                 modified = {...req.body, post_image}
             }else {
                 modified = {...req.body};
