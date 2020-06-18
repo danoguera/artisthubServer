@@ -14,7 +14,7 @@ module.exports = {
             const post = await Post.create({...req.body, owner:req.user.id, post_image});
             res.status(200).json(post);
         } catch (error){
-            res.status(401).json(error);
+            res.status(401).json({ message: error.message });
         }  
     }, 
     async update (req, res){
