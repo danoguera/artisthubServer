@@ -35,7 +35,7 @@ const userSchema = new Schema({
     state: String, 
     country: String, 
     birthDate: Date,
-    documentID: String
+    documentId: String
 
 },{
     timestamps: true,

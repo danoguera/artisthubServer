@@ -31,7 +31,9 @@ const providerSchema = new Schema({
     state: String, 
     country: String, 
     birthDate: Date,
-    documentID: String
+    documentId: String,
+    endDate: Date,
+    payments: [String],
 
 
 },{
