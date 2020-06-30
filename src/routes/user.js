@@ -5,9 +5,9 @@ const { auth }  = require('../utils/middleware');
 
 router.route('/').get(auth, userController.list);
 //router.route('/').post(userController.create);
-router.route('/:userId').put(userController.update);
-router.route('/:userId').get(userController.show);
-router.route('/:userId').delete(userController.destroy);
+router.route('/').put(auth, userController.update);
+router.route('/get').get(auth,userController.show);
+router.route('/').delete(auth, userController.destroy);
 
 router.route('/signin').post(userController.signin);
 router.route('/signup').post(userController.create);

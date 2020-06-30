@@ -45,18 +45,17 @@ module.exports = {
         const options ={
             new: true,
         };
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const user = await User.findByIdAndUpdate(userId, req.body, options);
         res.status(200).json(user);
     },
     async show (req, res){
-
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const user = await User.findById(userId, req.body);
         res.status(200).json(user);
     },
     async destroy(req, res){
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const user = await User.findByIdAndDelete(userId);
         res.status(200).json(user);
     },

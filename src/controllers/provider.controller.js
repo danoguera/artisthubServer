@@ -7,22 +7,22 @@ module.exports = {
         const providers= await Provider.find();
         res.status(200).json(providers);
     },
-    async create(req, res){
-        try{ 
-            if (!req.body.password ){ 
-                throw Error("Please include password");  
+    async create(req, res) {
+        try {
+            if (!req.body.password) {
+                throw Error("Please include password");
             }
-            if (!req.body.email ){ 
-                throw Error("Please include email");   
+            if (!req.body.email) {
+                throw Error("Please include email");
             }
 
-            const password = await bcrypt.hash(req.body.password,10);
-                const email = req.body.email.toLowerCase();
-        const provider = await Provider.create({...req.body, email, password});
+            const password = await bcrypt.hash(req.body.password, 10);
+            const email = req.body.email.toLowerCase();
+            const provider = await Provider.create({ ...req.body, email, password });
 
-        const token = await jwt.sign({"id":provider._id},  process.env.SECRET, { expiresIn: 60 * 60});
-  
-        res.status(200).json(token);
+            const token = await jwt.sign({ "id": provider._id }, process.env.SECRET, { expiresIn: 60 * 60 });
+
+            res.status(200).json(token);
         
         } catch (error){
             res.status(401).json({ message: error.message });
@@ -54,17 +54,17 @@ module.exports = {
         const options ={
             new: true,
         };
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const provider = await Provider.findByIdAndUpdate(userId, req.body, options);
         res.status(200).json(provider);
     },
     async show (req, res){
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const provider = await Provider.findById(userId, req.body);
         res.status(200).json(provider);
     },
     async destroy(req, res){
-        const userId = req.params.userId;
+        const userId = req.user.id;
         const provider = await Provider.findByIdAndDelete(userId);
         res.status(200).json(provider);
     },
