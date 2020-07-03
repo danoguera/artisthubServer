@@ -50,7 +50,21 @@ module.exports = {
             const result = await bcrypt.compare(req.body.password, password);
             if (result){
                 const token = await jwt.sign({"id":provider._id},  process.env.SECRET, { expiresIn: 60 * 60});
-                res.status(200).json(token );
+
+            let active;
+            if (provider.endDate){
+                const today = new Date();
+                if (today - provider.endDate < 0){    //Aun tiene suscripcion activa
+                    active=true;
+                }else {
+                    active=false;
+                }
+            }else {
+                active=false;
+            }
+
+
+                res.status(200).json({token, active});
             } else {
                 res.status(401).json("Wrong user/password");
             } 
