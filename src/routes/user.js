@@ -11,5 +11,7 @@ router.route('/').delete(auth, userController.destroy);
 
 router.route('/signin').post(userController.signin);
 router.route('/signup').post(userController.create);
+router.route('/recover').post(userController.recover);
+router.route('/updatepassword').put(auth, userController.updatePassword);
 
 module.exports = router;
