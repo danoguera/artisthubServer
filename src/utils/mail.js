@@ -14,7 +14,7 @@ module.exports = {
     return {
       html: `
         <body>
-          <h1>Artisthub App</h1>
+          <h1>Artist Hub App</h1>
           <h2>Welcome ${name}</h2>
         </body>
       `,
@@ -34,6 +34,62 @@ module.exports = {
         </body>
       `,
       text: `Artisthub App\n PLease visit to reset your password:  ${link}`,
+    };
+  },
+
+  paymentMail(fare,title,description,clientName,clientEmail,message,refPayment,eventDate) {
+    return {
+      html: `
+        <body>
+          <h1>${title}</h1>
+          <p>A payment for one of your services has been received for an amount of $ ${fare}.</p>
+          <p>Description of your service:</p>
+          ${description}
+          <p>The information about the client is:</p>
+          <p>${clientName}</p>
+          <p>${clientEmail}</p>
+          <p>The dates of your client&rsquo;s event are: ${eventDate}</p>
+          <p>Message from your client: ${message}</p> 
+          <p>Payment Reference: ${refPayment}</p>
+          <p>Thank you!</p>
+          <p>ArtistHub</p>
+        </body>
+      `,
+    };
+  },
+
+  contactMail(title,description,clientName,clientEmail,message) {
+    return {
+      html: `
+        <body>
+          <h1>${title}</h1>
+          <p>An user has commented on your post:</p>
+          <p>${description}</p>
+          <p>The information about the client is:</p>
+          <p>${clientName}</p>
+          <p>${clientEmail}</p>
+          <p>The message from your client is: ${message}</p>
+          <p>Thank you!</p>
+          <p>ArtistHub</p>
+        </body>
+      `,
+    };
+  },
+
+  paymentMailUser(fare,title,description,providerName,providerEmail) {
+    return {
+      html: `
+        <body>
+          <h1>${title}</h1>
+          <p>This is a message confirming you have paid $${fare} for the following service at Artist Hub:</p>
+          ${description}
+          <p>The information about the service provider is:</p>
+          <p>${providerName}</p>
+          <p>${providerEmail}</p>
+          <p>Thank you!</p>
+          <p>ArtistHub</p>
+        </body>
+      `,
     };
   },
 

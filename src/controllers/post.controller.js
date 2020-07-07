@@ -1,5 +1,7 @@
 const Post = require('../models/post.model');
-
+const { transporter, paymentMail, paymentMailUser, contactMail} = require('../utils/mail');
+const User = require('../models/user.model');
+const Provider = require('../models/provider.model');
 
 module.exports = {
     async list(req, res){
@@ -70,7 +72,47 @@ module.exports = {
         const posts = await Post.find({subcategory: subcategoryName, category: categoryName} );
         res.status(200).json(posts);
     },
+    async payment(req, res){
+        console.log(req.body);
+        const message = req.body.message;
+        const userId = req.user.id;
+        const postId = req.params.postId;
+        const posts = await Post.findById(postId);
+        const client = await User.findById(userId);
+        const provider = await Provider.findById(posts.owner);
+        const mail = {
+            from: '"Artisthub App" <artisthub@zohomail.com>',
+            to: provider.email,
+            subject: "ArtistHub - Payment Notice",
+            ...paymentMail(posts.fare,posts.title,posts.description,client.name + ' ' + client.lastname,client.email,message,req.body.refPago,req.body.eventDate),
+        }
+        await transporter.sendMail(mail, (err) => {console.log(err)});
+        
+        const mailUser = {
+            from: '"Artisthub App" <artisthub@zohomail.com>',
+            to: client.email,
+            subject: "ArtistHub - Payment Confirmation",
+            ...paymentMailUser(posts.fare,posts.title,posts.description,provider.name + ' ' + provider.lastname,provider.email),
+        }
+        await transporter.sendMail(mailUser, (err) => {console.log(err)});
+        res.status(200).json(posts);
+    },
 
-
-
+    async contact(req, res){
+        const message = req.body.description;
+        const userId = req.user.id;
+        const postId = req.body.postId;
+        const posts = await Post.findById(postId);
+        const client = await User.findById(userId);
+        const provider = await Provider.findById(posts.owner);
+        const mail = {
+            from: '"Artisthub App" <artisthub@zohomail.com>',
+            to: provider.email,
+            subject: "ArtistHub - Contact from an User",
+            ...contactMail(posts.title,posts.description,client.name + ' ' + client.lastname,client.email,message),
+        }
+        await transporter.sendMail(mail, (err) => {console.log(err)});
+        
+        res.status(200).json(posts);
+    },
 } 

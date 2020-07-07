@@ -8,8 +8,8 @@ router.route('/').post(auth, formData, postController.create); //Se añade middl
 router.route('/:postId').put(verify, formData, postController.update);  //Actualizar un post
 router.route('/:postId').get(postController.show);
 router.route('/:postId').delete(verify, postController.destroy);
-
-
+router.route('/payment/:postId').post(auth,postController.payment);
+router.route('/contact').post(auth,postController.contact);
 
 router.route('/subcategory/:subcategoryName').get(auth, postController.showAll);
 router.route('/category/:categoryName').get(auth, postController.showAllCategory);

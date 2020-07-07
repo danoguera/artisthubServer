@@ -23,6 +23,10 @@ const postSchema = new Schema({
     city: String,
     state: String, 
     country: String, 
+    fare: {
+        type: Number,
+        required:[true, "A fare is required"] 
+    },
 },{
     timestamps: true,
 });

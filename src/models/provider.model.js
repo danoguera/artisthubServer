@@ -25,7 +25,6 @@ const providerSchema = new Schema({
     }, 
     username:{
         type: String,
-        required: [true, "Username is required"] 
     },
     city: String,
     state: String, 
