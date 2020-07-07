@@ -73,7 +73,6 @@ module.exports = {
         res.status(200).json(posts);
     },
     async payment(req, res){
-        console.log(req.body);
         const message = req.body.message;
         const userId = req.user.id;
         const postId = req.params.postId;

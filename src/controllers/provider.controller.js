@@ -130,7 +130,6 @@ module.exports = {
             provider = await Provider.findByIdAndUpdate(providerId, {endDate: endDate, payments: payments}, options);
             res.status(200).json(provider);
         }catch (error){
-            //console.log(error);
             res.status(402).json({ message: error.message });
         }
     },
