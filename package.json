@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "MONGO_URL='mongodb://127.0.0.1:27017/artisthub-test' jest --detectOpenHandles  --forceExit  --coverage"
+    // "test": "MONGO_URL='mongodb://127.0.0.1:27017/artisthub-test' jest --detectOpenHandles  --forceExit  --coverage"
   },
   "author": "",
   "license": "MIT",
